@@ -1,9 +1,7 @@
 import React from 'react'
 import { Route, Link, Redirect } from 'react-router-dom';
 
-// components
-import ResultsContainer from './ResultsContainer';
-import beachesData from '../data/beaches';
+
 
 const Nav = () => (
   <div>

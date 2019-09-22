@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import apiKey from './config';
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ import Form from './components/Form';
 import Nav from './components/Nav';
 import ResultsContainer from './components/ResultsContainer';
 // import Header from './components/Header';
+
 // JSON
 import beachesData from './data/beaches';
 import parksData from './data/parks';
@@ -29,7 +30,7 @@ class App extends Component {
     super();
     this.state = {
       loading: true,
-      photos: [],
+      searchResults: [],
       searchValue: '',
       beachesResults: beachesData,
       parksResults: parksData,
@@ -41,16 +42,14 @@ class App extends Component {
     this.performSearch()
   }
 
-  performSearch(query) {
+  performSearch = (query) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&${sort}&${privacy}&${safe}&${content}&${extras}&${perPage}&format=json&nojsoncallback=1`)
       .then(response => {
-        console.log(this.state);
-          this.setState({
-            photos: response.data.photos.photo,
-            loading: false,
-            searchValue: query
-          });
-        
+        this.setState({
+          searchResults: response.data.photos.photo,
+          loading: false,
+          searchValue: query
+        });
       })
       .catch(error => {
         console.log('Error fetching and parsing data', error);
@@ -61,51 +60,55 @@ class App extends Component {
     console.log(this.state);
     return(
       <div className="container">
-
           
-
-          {/* Form component */}
-          {/* <Form onSearch={this.performSearch} /> */}
-
-          
-
-          
-          {/* Routes */}
           <Router>
 
           {/* Navigation component */}
           <Nav />
 
+          {/* Form component */}
+          <Form onSearch={this.performSearch} />
+
             <Switch>
-              <Route path="/beaches" render={ () =>
+
+              <Route exact path="/beaches" render={ () =>
                   <ResultsContainer 
                     data={this.state.beachesResults}
                     searchValue={this.state.searchValue}
                   />
                 } 
               />
-              <Route path="/parks" render={ () =>
+
+              <Route exact path="/parks" render={ () =>
                   <ResultsContainer 
                     data={this.state.parksResults}
                     searchValue={this.state.searchValue}
                   />
                 }
               />
-              <Route path="/sunsets" render={ () =>
+
+              <Route exact path="/sunsets" render={ () =>
                   <ResultsContainer 
                     data={this.state.sunsetsResults}
                     searchValue={this.state.searchValue}
                   /> 
                 }
               />
+
+              <Route exact path={`/:query`} render={ () => 
+
+                  (this.state.loading)
+                  ? <p>Loading...</p>
+                  : <ResultsContainer 
+                    data={this.state.searchResults}
+                    searchValue={this.state.searchValue}
+                  />
+              
+                }
+              />
             </Switch>
           </Router>
 
-          {/* ResultsContainer component */}
-          {/* <ResultsContainer 
-            data={this.state.photos}
-            searchValue={this.state.searchValue}
-          /> */}
       </div>
     );
   }

@@ -6,7 +6,7 @@ export default class Form extends Component {
     searchValue: ''
   }
 
-  searchChange = e => {
+  searchChange = (e) => {
     this.setState({ searchValue: e.target.value });
   }
 

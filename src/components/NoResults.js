@@ -9,7 +9,7 @@ const NoResults = () => {
       <br/>
       Please try again...</p>
       <hr/>
-      <img src="//live.staticflickr.com/3632/3410525442_cdcbdd4e86_h.jpg" alt="missing results" />
+      <img src="https://live.staticflickr.com/3632/3410525442_cdcbdd4e86_h.jpg" alt="missing results" />
     </li>
   );
 };
