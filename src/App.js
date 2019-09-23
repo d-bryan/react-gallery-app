@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import apiKey from './config';
 import axios from 'axios';
 
@@ -7,7 +7,8 @@ import axios from 'axios';
 import Form from './components/Form';
 import Nav from './components/Nav';
 import ResultsContainer from './components/ResultsContainer';
-// import Header from './components/Header';
+import Header from './components/Header';
+
 
 // JSON
 import beachesData from './data/beaches';
@@ -45,6 +46,7 @@ class App extends Component {
   performSearch = (query) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&${sort}&${privacy}&${safe}&${content}&${extras}&${perPage}&format=json&nojsoncallback=1`)
       .then(response => {
+        
         this.setState({
           searchResults: response.data.photos.photo,
           loading: false,
@@ -63,13 +65,21 @@ class App extends Component {
           
           <Router>
 
-          {/* Navigation component */}
-          <Nav />
+          {/* Header component */}
+          <Header />
 
           {/* Form component */}
           <Form onSearch={this.performSearch} />
 
+          {/* Navigation component */}
+          <Nav />
+
             <Switch>
+
+              <Route exact path="/" render={() => 
+                  <Redirect to="/beaches" />
+                } 
+              />
 
               <Route exact path="/beaches" render={ () =>
                   <ResultsContainer 

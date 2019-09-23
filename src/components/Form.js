@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom';
 
-export default class Form extends Component {
+class Form extends Component {
 
   state = {
     searchValue: ''
+  }
+
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired
   }
 
   searchChange = (e) => {
@@ -13,6 +21,7 @@ export default class Form extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.onSearch(this.query.value);
+    this.props.history.push({ pathname: `/${this.query.value}` })
     e.currentTarget.reset();
   }
 
@@ -37,3 +46,5 @@ export default class Form extends Component {
     );
   }
 }
+
+export default withRouter(Form);

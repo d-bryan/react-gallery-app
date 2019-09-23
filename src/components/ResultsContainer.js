@@ -4,12 +4,13 @@ import React from 'react'
 import Image from './Image';
 import NoResults from './NoResults';
 
+
 const ResultsContainer = props => {
 
   // pass the current state info to the image component
   const results = props.data;
   let photos;
-  if (results.length > 0) {
+  if (results.length) {
     // map the props to the image component
     photos = results.map(results => 
       <Image 
@@ -33,7 +34,7 @@ const ResultsContainer = props => {
       <h2>{props.searchValue}</h2>
         <div>
           <ul>
-            { photos }
+           { photos }
           </ul>
         </div>
     </div>
