@@ -1,17 +1,14 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
+// import Form from 'react-bootstrap/Form'
+// import FormControl from 'react-bootstrap/FormControl'
+// import Button from 'react-bootstrap/Button';
+// import Col from 'react-bootstrap/Col';
 
-class Form extends Component {
+class SearchForm extends Component {
 
   state = {
     searchValue: ''
-  }
-
-  static propTypes = {
-    match: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired
   }
 
   searchChange = (e) => {
@@ -26,7 +23,26 @@ class Form extends Component {
   }
 
   render() {
+
     return (
+
+      // <Form inline onSubmit={this.handleSubmit}>
+      // <Col>
+      //     <FormControl 
+      //       type="text"
+      //       onChange={this.searchChange}
+      //       ref={(input) => this.query = input}
+      //       placeholder="Search" 
+      //       className="mr-sm-2"
+      //       required
+      //     />
+      //   </Col>
+
+      //   <Col>
+      //     <Button variant="outline-info">Search</Button>
+      //   </Col>
+      // </Form>
+
       <form className="search-form" onSubmit={this.handleSubmit}>
       <input 
         type="search" 
@@ -47,4 +63,4 @@ class Form extends Component {
   }
 }
 
-export default withRouter(Form);
+export default withRouter(SearchForm);

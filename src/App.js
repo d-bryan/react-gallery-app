@@ -4,10 +4,11 @@ import apiKey from './config';
 import axios from 'axios';
 
 // Components
-import Form from './components/Form';
-import Nav from './components/Nav';
+import SearchForm from './components/SearchForm';
+import Navigation from './components/Navigation';
 import ResultsContainer from './components/ResultsContainer';
 import Header from './components/Header';
+import Spinner from 'react-bootstrap/Spinner';
 
 
 // JSON
@@ -15,7 +16,7 @@ import beachesData from './data/beaches';
 import parksData from './data/parks';
 import sunsetsData from './data/sunsets';
 
-// query parameters
+// // query parameters
 const sort = 'sort=relevance';
 const privacy = 'privacy_filter=1';
 const safe = 'safe_search=1';
@@ -24,7 +25,7 @@ const extras = 'extras=description%2C+license%2C+date_upload%2C+date_taken%2C+ow
 const perPage = 'per_page=24';
 
 
-
+// App class creates the state for the application, Mounts the component after a search is complete 
 class App extends Component {
 
   constructor() {
@@ -46,7 +47,6 @@ class App extends Component {
   performSearch = (query) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&${sort}&${privacy}&${safe}&${content}&${extras}&${perPage}&format=json&nojsoncallback=1`)
       .then(response => {
-        
         this.setState({
           searchResults: response.data.photos.photo,
           loading: false,
@@ -65,60 +65,58 @@ class App extends Component {
           
           <Router>
 
-          {/* Header component */}
+          {/* Header component -> Displays application name */}
           <Header />
 
-          {/* Form component */}
-          <Form onSearch={this.performSearch} />
+          {/* Form component -> Performs search query */}
+          <SearchForm onSearch={this.performSearch} />
+          
 
-          {/* Navigation component */}
-          <Nav />
+          {/* Navigation component -> Links the user to preloaded pages and queries */}
+          <Navigation />
 
+            {/* Redirect home route to /beaches */}
             <Switch>
-
               <Route exact path="/" render={() => 
                   <Redirect to="/beaches" />
                 } 
               />
-
+              {/* Render the beaches results */}
               <Route exact path="/beaches" render={ () =>
                   <ResultsContainer 
                     data={this.state.beachesResults}
-                    searchValue={this.state.searchValue}
+                    searchValue="Beaches"
                   />
                 } 
               />
-
+              {/* Render the parks results */}
               <Route exact path="/parks" render={ () =>
                   <ResultsContainer 
                     data={this.state.parksResults}
-                    searchValue={this.state.searchValue}
+                    searchValue="Parks"
                   />
                 }
               />
-
+              {/* Render the sunsets results */}
               <Route exact path="/sunsets" render={ () =>
                   <ResultsContainer 
                     data={this.state.sunsetsResults}
-                    searchValue={this.state.searchValue}
+                    searchValue="Sunsets"
                   /> 
                 }
               />
-
+              {/* Render the query results */}
               <Route exact path={`/:query`} render={ () => 
-
                   (this.state.loading)
-                  ? <p>Loading...</p>
+                  ? <Spinner animation="grow" variant="info" />
                   : <ResultsContainer 
                     data={this.state.searchResults}
                     searchValue={this.state.searchValue}
                   />
-              
                 }
               />
             </Switch>
           </Router>
-
       </div>
     );
   }

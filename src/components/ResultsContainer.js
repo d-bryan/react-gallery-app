@@ -1,4 +1,8 @@
 import React from 'react'
+// import Container from 'react-bootstrap/Container'
+
+
+
 
 // Components 
 import Image from './Image';
@@ -14,7 +18,7 @@ const ResultsContainer = props => {
     // map the props to the image component
     photos = results.map(results => 
       <Image 
-        url={results.url_m}
+        url={results.url_q}
         key={results.id}
         desc={results.description}
         owner={results.ownername}
@@ -30,11 +34,11 @@ const ResultsContainer = props => {
 
   // render the returned component whether that is the Image component || NoResults component
   return (
-    <div className="photo-container">
+    <div>
       <h2>{props.searchValue}</h2>
-        <div>
+        <div className="photo-container">
           <ul>
-           { photos }
+            { photos }
           </ul>
         </div>
     </div>
