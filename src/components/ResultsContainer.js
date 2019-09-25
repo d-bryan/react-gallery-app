@@ -28,7 +28,8 @@ const ResultsContainer = props => {
       />
     );
   // else return no results
-  } else {
+  }
+   else {
     photos = <NoResults />
   }
 

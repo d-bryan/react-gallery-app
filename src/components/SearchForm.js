@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-// import Form from 'react-bootstrap/Form'
-// import FormControl from 'react-bootstrap/FormControl'
-// import Button from 'react-bootstrap/Button';
-// import Col from 'react-bootstrap/Col';
 
 class SearchForm extends Component {
 
@@ -18,30 +14,14 @@ class SearchForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.onSearch(this.query.value);
-    this.props.history.push({ pathname: `/${this.query.value}` })
+    this.props.history.push({ pathname: `/${this.query.value}` });
+    this.props.history.push({ searchValue: this.query.value });
     e.currentTarget.reset();
   }
 
   render() {
 
     return (
-
-      // <Form inline onSubmit={this.handleSubmit}>
-      // <Col>
-      //     <FormControl 
-      //       type="text"
-      //       onChange={this.searchChange}
-      //       ref={(input) => this.query = input}
-      //       placeholder="Search" 
-      //       className="mr-sm-2"
-      //       required
-      //     />
-      //   </Col>
-
-      //   <Col>
-      //     <Button variant="outline-info">Search</Button>
-      //   </Col>
-      // </Form>
 
       <form className="search-form" onSubmit={this.handleSubmit}>
       <input 

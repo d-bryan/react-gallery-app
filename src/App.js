@@ -7,6 +7,7 @@ import axios from 'axios';
 import SearchForm from './components/SearchForm';
 import Navigation from './components/Navigation';
 import ResultsContainer from './components/ResultsContainer';
+import NoResults from './components/NoResults';
 import Header from './components/Header';
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -27,7 +28,7 @@ const perPage = 'per_page=24';
 
 // App class creates the state for the application, Mounts the component after a search is complete 
 class App extends Component {
-
+  // set the state for the application
   constructor() {
     super();
     this.state = {
@@ -39,11 +40,11 @@ class App extends Component {
       sunsetsResults: sunsetsData
     }
   }
-
+  // mount the component to the page
   componentDidMount() {
-    this.performSearch()
+    this.performSearch();
   }
-
+  // perform the search with the api generating all the information necassary for customization
   performSearch = (query) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&${sort}&${privacy}&${safe}&${content}&${extras}&${perPage}&format=json&nojsoncallback=1`)
       .then(response => {
@@ -62,7 +63,7 @@ class App extends Component {
     console.log(this.state);
     return(
       <div className="container">
-          
+          {/* Browser router imported as router */}
           <Router>
 
           {/* Header component -> Displays application name */}
@@ -115,6 +116,9 @@ class App extends Component {
                   />
                 }
               />
+              {/* Render the 404 route */}
+              <Route render={() => <NoResults />} />
+
             </Switch>
           </Router>
       </div>
