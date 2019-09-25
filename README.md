@@ -1,8 +1,40 @@
-# Treehouse Techdegree Unit-07 Project
+# Installing Application and Dependencies
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- NPM -> run `npm install`, this will install the application along with all of its dependencies
+
+- Yarn -> run `yarn install`, this will install the application along with all of its dependencies
+
+## Setup
+
+You will need to add a `config.js` file in the `src` directory, this will contain your API key for the Flickr API. Set up the file as such:
+
+```
+const apiKey = 'YOUR API KEY';
+export default apiKey;
+```
+
+Make sure to add this file to your `.gitignore` file before uploading it to github or any other git hosting server.
+
+I currently have my own logos set at the favicon and app logo's, you can change these to your own, keep the names the same or edit them in the `package.json` file
+
+## Use Case
+
+There are three searches preloaded by default and contained in the `data` directory with all of their respective JSON information. You can use this information to customize the application how you like.
+
+- Beaches
+- Parks
+- Sunsets
+
+The application uses Flickr's search API to gather image data from its database, you can customize this how you like. The application is already set up to do so, you will just need your own API key to do this.
+
+App Garden link for queries -> https://www.flickr.com/services/api/explore/flickr.photos.search
+
+Documentation about what query parameters mean -> https://www.flickr.com/services/api/flickr.photos.search.html
+
 
 ## Available Scripts
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 In the project directory, you can run:
 
