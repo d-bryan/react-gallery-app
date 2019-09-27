@@ -44,8 +44,18 @@ class App extends Component {
   componentDidMount() {
     this.performSearch();
   }
+  // prevent undefined search results 
+  query() {
+    let query;
+    if(query === undefined) {
+      return query = 'beaches';
+    } else {
+      return query;
+    }
+  }
+
   // perform the search with the api generating all the information necassary for customization
-  performSearch = (query) => {
+  performSearch = (query = this.query()) => {
     axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&${sort}&${privacy}&${safe}&${content}&${extras}&${perPage}&format=json&nojsoncallback=1`)
       .then(response => {
         this.setState({
@@ -60,7 +70,11 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state);
+    
+    // if (this.state.searchValue === undefined) {
+
+    // }
+
     return(
       <div className="container">
           {/* Browser router imported as router */}
@@ -79,45 +93,51 @@ class App extends Component {
             {/* Redirect home route to /beaches */}
             <Switch>
               <Route exact path="/" render={() => 
-                  <Redirect to="/beaches" />
-                } 
+                <Redirect to="/beaches" />
+              }
               />
               {/* Render the beaches results */}
               <Route exact path="/beaches" render={ () =>
-                  <ResultsContainer 
+                { return (this.state.loading)
+                ? <Spinner animation="grow" variant="info" />
+                : <ResultsContainer 
                     data={this.state.beachesResults}
                     searchValue="Beaches"
-                  />
+                /> }
                 } 
               />
               {/* Render the parks results */}
               <Route exact path="/parks" render={ () =>
-                  <ResultsContainer 
+                { return (this.state.loading)
+                ? <Spinner animation="grow" variant="info" />
+                : <ResultsContainer 
                     data={this.state.parksResults}
                     searchValue="Parks"
-                  />
+                /> }
                 }
               />
               {/* Render the sunsets results */}
               <Route exact path="/sunsets" render={ () =>
-                  <ResultsContainer 
+                { return (this.state.loading)
+                ? <Spinner animation="grow" variant="info" />
+                : <ResultsContainer 
                     data={this.state.sunsetsResults}
                     searchValue="Sunsets"
-                  /> 
+                /> }
                 }
               />
               {/* Render the query results */}
-              <Route exact path={`/:query`} render={ () => 
-                  (this.state.loading)
+              <Route exact path={`/search/:query`} render={ () => 
+                { return (this.state.loading)
                   ? <Spinner animation="grow" variant="info" />
                   : <ResultsContainer 
                     data={this.state.searchResults}
                     searchValue={this.state.searchValue}
-                  />
+                 /> }
                 }
               />
               {/* Render the 404 route */}
-              <Route render={() => <NoResults />} />
+              <Route render={() => <NoResults /> } />
 
             </Switch>
           </Router>
